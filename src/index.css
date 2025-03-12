@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-lexend: "Lexend Deca", sans-serif;
+  --color-background-600: #0f1114;
+  --color-background-500: #121418;
+  --color-background-400: #3b424f;
+}
+
+@layer base {
+  .font-outline-2 {
+    -webkit-text-stroke: 2px black;
+  }
+  .font-outline-4 {
+    -webkit-text-stroke: 4px black;
+  }
+}
