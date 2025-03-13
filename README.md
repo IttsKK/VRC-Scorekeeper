@@ -16,10 +16,15 @@ Access the app at [ittskk.github.io/vrcscorekeeper](https://ittskk.github.io/vrc
 
 Install as a PWA on mobile devices for offline access.
 
-## Screenshots
+## UI
 
-![Screenshot 1](images/Screenshot_1.jpg)
-![Screenshot 2](images/Screenshot_2.jpg)
+<p align="center">
+  <img src="images/Scorekeeper_ui.png" width="92.6%" />
+</p>
+<p align="center">
+  <img src="images/Screenshot_1.jpg" width="45%" />
+  <img src="images/Screenshot_2.jpg" width="45%" />
+</p>
 
 ## Compatibility
 
