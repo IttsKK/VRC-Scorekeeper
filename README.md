@@ -1,6 +1,6 @@
 # VRC Scorekeeper
 
-A lightweight web application for tracking VEX Robotics Competition match scores. Built for teams and referees who need a simple, reliable scoring tool.
+A lightweight web application for tracking VEX Robotics Competition match scores. Built for teams who need a simple, reliable scoring tool.
 
 ## Features
 
