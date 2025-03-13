@@ -161,13 +161,15 @@ export default function App() {
     // Add climb points: level 1 = 0pts, level 2 = 3pts, level 3 = 6pts, level 4 = 12pts
     // For each red robot
     // Helper function to calculate climb points
-    const getClimbPoints = (level: number) => {
+    const getClimbPoints = (level: number, robotId: string) => {
       // Base points for each level
       const basePoints = level === 4 ? 12 : (level - 1) * 3;
 
-      // Add 2 points for levels 2-4 if either team has high stake
+      // Add 2 points for levels 2-4 if the robot's team has high stake
       const bonusPoints =
-        level >= 2 && (highStakeColor === "red" || highStakeColor === "blue")
+        level >= 2 &&
+        ((robotId.startsWith("red") && highStakeColor === "red") ||
+          (robotId.startsWith("blue") && highStakeColor === "blue"))
           ? 2
           : 0;
 
