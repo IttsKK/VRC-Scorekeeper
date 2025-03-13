@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
-  base: "/vrcscorekeeper/",
+  base: "/VRC-Scorekeeper/",
 
   server: {
     // Add headers to prevent caching during development
@@ -40,7 +40,7 @@ export default defineConfig({
         background_color: "#000000",
         display: "fullscreen",
         orientation: "portrait",
-        start_url: "/vrcscorekeeper/",
+        start_url: "/VRC-Scorekeeper/",
         icons: [
           {
             src: "images/ring.png",

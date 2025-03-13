@@ -1,7 +1,7 @@
 {
   "name": "VRC Scorekeeper",
   "short_name": "VRC Scorekeeper",
-  "start_url": "/vrcscorekeeper/",
+  "start_url": "/VRC-Scorekeeper/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",

@@ -179,7 +179,7 @@ export default function App() {
     // Add climb points for all robots
     const robotIds = ["red1", "red2", "blue1", "blue2"] as const;
     robotIds.forEach((id) => {
-      const score = getClimbPoints(climbLevels[id]);
+      const score = getClimbPoints(climbLevels[id], id);
       if (id.startsWith("red")) {
         redScore += score;
       } else {

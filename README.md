@@ -12,7 +12,7 @@ A lightweight web application for tracking VEX Robotics Competition match scores
 
 ## Usage
 
-Access the app at [ittskk.github.io/vrcscorekeeper](https://ittskk.github.io/vrcscorekeeper/)
+Access the app at [ittskk.github.io/VRC-Scorekeeper](https://ittskk.github.io/VRC-Scorekeeper/)
 
 Install as a PWA on mobile devices for offline access.
 
