@@ -194,12 +194,15 @@ export default function App() {
     <div className="bg-background-500 min-h-screen flex flex-col">
       {/* Header */}
       <header className="h-12 bg-black text-white flex justify-between items-center px-8 py-10">
-        <button
-          onClick={clearAll}
-          className="text-white active:text-red-500 md:hover:text-red-500"
-        >
-          <Trash2 size={24} />
-        </button>
+        <div className="flex items-center gap-8">
+          <button
+            onClick={clearAll}
+            className="text-white active:text-red-500 md:hover:text-red-500"
+          >
+            <Trash2 size={24} />
+          </button>
+          <InstallPWA />
+        </div>
 
         <button
           onClick={fullscreenActive ? exitFullscreen : requestFullscreen}
@@ -354,7 +357,6 @@ export default function App() {
       </footer>
 
       {/* Install PWA prompt */}
-      <InstallPWA />
     </div>
   );
 }

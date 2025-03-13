@@ -23,18 +23,19 @@ export default defineConfig({
         navigateFallback: "index.html",
       },
       includeAssets: [
-        "/images/ring.png",
+        "favicon.ico",
         "apple-touch-icon.png",
         "masked-icon.svg",
-        "/images/corner_negative.svg",
-        "/images/corner_positive.svg",
-        "/images/ring_negative.svg",
-        "/images/ring_positive.svg",
+        "images/ring.png",
+        "images/corner_negative.svg",
+        "images/corner_positive.svg",
+        "images/ring_negative.svg",
+        "images/ring_positive.svg",
       ],
       manifest: {
-        name: "VEX Score Tracker",
-        short_name: "VEX Tracker",
-        description: "Track VEX competition scores in real-time",
+        name: "VRC Scorekeeper",
+        short_name: "VRC Scorekeeper",
+        description: "Track VRC matches in real-time",
         theme_color: "#000000",
         background_color: "#000000",
         display: "fullscreen",
@@ -42,12 +43,12 @@ export default defineConfig({
         start_url: "/vrcscorekeeper/",
         icons: [
           {
-            src: "/images/ring.png",
+            src: "images/ring.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/images/ring.png",
+            src: "images/ring.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable",
@@ -137,4 +138,12 @@ export default defineConfig({
       },
     }),
   ],
+  // Explicitly configure public directory handling
+  publicDir: "public",
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    // Ensure assets from public directory are copied to the build
+    copyPublicDir: true,
+  },
 });

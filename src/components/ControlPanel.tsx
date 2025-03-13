@@ -58,12 +58,12 @@ const ControlPanel = ({
 
   // Define button configurations to ensure consistency
   const cornerPositiveProps = {
-    icon: "/images/corner_positive.svg",
+    icon: "images/corner_positive.svg",
     iconSize: "w-16 h-16",
   };
 
   const cornerNegativeProps = {
-    icon: "/images/corner_negative.svg",
+    icon: "images/corner_negative.svg",
     iconSize: "w-16 h-16",
   };
 
@@ -108,22 +108,22 @@ const ControlPanel = ({
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerCancel}
         onPointerLeave={handlePointerCancel}
-        icon="/images/ring_negative.svg"
+        icon="images/ring_negative.svg"
         iconSize="w-12 h-12"
         iconPosition="mt-[2px]"
       />
 
       <ControlButton
-        onClick={() => addRing("blue")}
-        color="blue"
-        icon="/images/ring_positive.svg"
+        onClick={() => addRing("red")}
+        color="red"
+        icon="images/ring_positive.svg"
         iconSize="w-12 h-12"
         iconPosition="mb-[2px]"
       />
       <ControlButton
-        onClick={() => addRing("red")}
-        color="red"
-        icon="/images/ring_positive.svg"
+        onClick={() => addRing("blue")}
+        color="blue"
+        icon="images/ring_positive.svg"
         iconSize="w-12 h-12"
         iconPosition="mb-[2px]"
       />
