@@ -19,7 +19,7 @@ Install as a PWA on mobile devices for offline access.
 ## UI
 
 <p align="center">
-  <img src="images/Scorekeeper_ui.png" width="92.6%" />
+  <img src="images/scorekeeper_ui.png" width="92.6%" />
 </p>
 <p align="center">
   <img src="images/Screenshot_1.jpg" width="45%" />
