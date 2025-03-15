@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Download } from "lucide-react";
+import UpdatePWA from "./UpdatePWA";
+import { registerSW } from "../registerSW";
 
 const InstallPWA = () => {
   const [supportsPWA, setSupportsPWA] = useState(false);
   const [promptInstall, setPromptInstall] = useState<any>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [needsUpdate, setNeedsUpdate] = useState(false);
+  const [updateSW, setUpdateSW] = useState<(() => void) | null>(null);
 
   useEffect(() => {
+    // Register service worker and get update functions
+    const { updateSW: update, needsUpdate: checkUpdate } = registerSW();
+    setUpdateSW(() => update);
+
+    // Check for updates periodically
+    const updateChecker = setInterval(() => {
+      setNeedsUpdate(checkUpdate());
+    }, 5000);
+
     const handler = (e: Event) => {
       e.preventDefault();
       setSupportsPWA(true);
@@ -29,6 +42,7 @@ const InstallPWA = () => {
         handler as EventListener
       );
       window.removeEventListener("appinstalled", () => setIsInstalled(true));
+      clearInterval(updateChecker);
     };
   }, []);
 
@@ -47,21 +61,27 @@ const InstallPWA = () => {
     });
   };
 
-  // Don't show anything if PWA is not supported or already installed
-  if (!supportsPWA || isInstalled) {
-    return null;
-  }
+  const handleUpdate = () => {
+    if (updateSW) {
+      updateSW();
+      setNeedsUpdate(false);
+    }
+  };
 
-  // Return just the download icon button
   return (
-    <button
-      onClick={handleInstallClick}
-      className="text-white active:text-blue-500 md:hover:text-blue-500"
-      aria-label="Install app"
-      title="Install app for offline use"
-    >
-      <Download size={24} />
-    </button>
+    <>
+      {!supportsPWA || isInstalled ? null : (
+        <button
+          onClick={handleInstallClick}
+          className="text-white active:text-blue-500 md:hover:text-blue-500"
+          aria-label="Install app"
+          title="Install app for offline use"
+        >
+          <Download size={24} />
+        </button>
+      )}
+      <UpdatePWA needsUpdate={needsUpdate} onUpdate={handleUpdate} />
+    </>
   );
 };
 

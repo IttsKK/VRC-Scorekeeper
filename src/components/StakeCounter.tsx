@@ -1,4 +1,5 @@
 import Ring from "./Ring";
+import { ScoringMode } from "../App";
 
 const PlusIcon = () => (
   <svg
@@ -47,6 +48,10 @@ type StakeCounterProps = {
   setActiveStake: () => void;
   rings: ("red" | "blue")[];
   corner: "positive" | "negative" | "none";
+  scoringMode?: ScoringMode;
+  onCornerChange?: (corner: "positive" | "negative" | "none") => void;
+  positiveCornerLimitReached?: boolean;
+  negativeCornerLimitReached?: boolean;
 };
 
 const StakeCounter = ({
@@ -55,7 +60,65 @@ const StakeCounter = ({
   setActiveStake,
   rings,
   corner,
+  scoringMode = "match",
+  onCornerChange,
+  positiveCornerLimitReached = false,
+  negativeCornerLimitReached = false,
 }: StakeCounterProps) => {
+  // In skills mode, we only show the indicator if it's positive or none
+  const shouldShowIndicator =
+    hasIndicator && (scoringMode === "match" || corner !== "negative");
+
+  // Function to cycle through corner states when indicator is clicked
+  const handleIndicatorClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering setActiveStake
+
+    if (!onCornerChange) return;
+
+    if (scoringMode === "match") {
+      // In match mode: none -> positive -> negative -> none
+      if (corner === "none") {
+        // If positive is unavailable, try negative, then none
+        if (positiveCornerLimitReached) {
+          if (negativeCornerLimitReached) {
+            // Both positive and negative are unavailable, stay at none
+            return;
+          } else {
+            // Skip to negative
+            onCornerChange("negative");
+          }
+        } else {
+          // Positive is available
+          onCornerChange("positive");
+        }
+      } else if (corner === "positive") {
+        // If negative is unavailable, skip to none
+        if (negativeCornerLimitReached) {
+          onCornerChange("none");
+        } else {
+          // Negative is available
+          onCornerChange("negative");
+        }
+      } else {
+        // From negative, always go to none
+        onCornerChange("none");
+      }
+    } else {
+      // In skills mode: none -> positive -> none
+      if (corner === "none") {
+        // If positive is unavailable, stay at none
+        if (positiveCornerLimitReached) {
+          return;
+        } else {
+          onCornerChange("positive");
+        }
+      } else {
+        // From positive, always go to none
+        onCornerChange("none");
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col items-center">
       {/* Stake Counter */}
@@ -74,11 +137,14 @@ const StakeCounter = ({
       </div>
 
       {/* Indicator (Optional) */}
-      {hasIndicator && (
-        <div className="mt-[6px] w-[46px] h-[21px] bg-white rounded-full flex items-center justify-center outline-3 outline-black">
+      {shouldShowIndicator && (
+        <div
+          className="mt-[6px] w-[46px] h-[21px] bg-white rounded-full flex items-center justify-center outline-3 outline-black cursor-pointer"
+          onClick={handleIndicatorClick}
+        >
           {corner === "positive" ? (
             <PlusIcon />
-          ) : corner === "negative" ? (
+          ) : corner === "negative" && scoringMode === "match" ? (
             <MinusIcon />
           ) : null}
         </div>

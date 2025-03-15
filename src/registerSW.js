@@ -1,14 +1,32 @@
 import { registerSW as pwaRegisterSW } from "virtual:pwa-register";
 
 export const registerSW = () => {
-  return pwaRegisterSW({
+  let updateCallback;
+  let needsUpdate = false;
+
+  const updateSW = () => {
+    if (updateCallback) {
+      updateCallback();
+    }
+  };
+
+  const registration = pwaRegisterSW({
     onNeedRefresh() {
       console.log("New content available; please refresh.");
+      needsUpdate = true;
     },
     onOfflineReady() {
       console.log("App is ready to work offline.");
     },
+    onRegisteredSW(swScriptUrl, registration) {
+      updateCallback = registration;
+    },
   });
+
+  return {
+    updateSW,
+    needsUpdate: () => needsUpdate,
+  };
 };
 
 // Function to unregister all service workers and clear caches

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import ControlButton from "./ControlButton";
+import { ScoringMode } from "../App";
 
 const ControlPanel = ({
   hasIndicator,
@@ -8,6 +9,11 @@ const ControlPanel = ({
   removeRing,
   clearStake,
   setCorner,
+  scoringMode = "match",
+  redLimitReached = false,
+  blueLimitReached = false,
+  positiveCornerLimitReached = false,
+  negativeCornerLimitReached = false,
 }: {
   hasIndicator: boolean;
   activeCorner: "positive" | "negative" | "none";
@@ -15,6 +21,11 @@ const ControlPanel = ({
   removeRing: () => void;
   clearStake: () => void;
   setCorner: (type: "positive" | "negative" | "none") => void;
+  scoringMode?: ScoringMode;
+  redLimitReached?: boolean;
+  blueLimitReached?: boolean;
+  positiveCornerLimitReached?: boolean;
+  negativeCornerLimitReached?: boolean;
 }) => {
   const [holdTimeout, setHoldTimeout] = useState<ReturnType<
     typeof setTimeout
@@ -22,7 +33,27 @@ const ControlPanel = ({
   const triggeredRef = useRef(false);
 
   const handleCornerClick = (type: "positive" | "negative") => {
-    setCorner(activeCorner === type ? "none" : type);
+    // In skills mode, only allow positive corners
+    if (scoringMode === "skills" && type === "negative") {
+      return;
+    }
+
+    // If this corner is already active, always allow toggling it off
+    if (activeCorner === type) {
+      setCorner("none");
+      return;
+    }
+
+    // Check if we've reached the corner limit for adding new corners
+    if (type === "positive" && positiveCornerLimitReached) {
+      return;
+    }
+
+    if (type === "negative" && negativeCornerLimitReached) {
+      return;
+    }
+
+    setCorner(type);
   };
 
   const handlePointerDown = () => {
@@ -71,16 +102,32 @@ const ControlPanel = ({
     <div className="h-28 bg-background-400 flex justify-center items-center rounded-t-xl gap-2">
       {hasIndicator ? (
         <>
-          <ControlButton
-            onClick={() => handleCornerClick("negative")}
-            isActive={activeCorner === "negative"}
-            disabled={!hasIndicator}
-            {...cornerNegativeProps}
-          />
+          {/* Only show negative corner button in match mode */}
+          {scoringMode === "match" ? (
+            <ControlButton
+              onClick={() => handleCornerClick("negative")}
+              isActive={activeCorner === "negative"}
+              disabled={
+                !hasIndicator ||
+                (negativeCornerLimitReached && activeCorner !== "negative")
+              }
+              {...cornerNegativeProps}
+            />
+          ) : (
+            <ControlButton
+              onClick={() => {}}
+              isActive={false}
+              disabled={true}
+              {...cornerNegativeProps}
+            />
+          )}
           <ControlButton
             onClick={() => handleCornerClick("positive")}
             isActive={activeCorner === "positive"}
-            disabled={!hasIndicator}
+            disabled={
+              !hasIndicator ||
+              (positiveCornerLimitReached && activeCorner !== "positive")
+            }
             {...cornerPositiveProps}
           />
         </>
@@ -119,6 +166,7 @@ const ControlPanel = ({
         icon="images/ring_positive.svg"
         iconSize="w-12 h-12"
         iconPosition="mb-[2px]"
+        disabled={redLimitReached}
       />
       <ControlButton
         onClick={() => addRing("blue")}
@@ -126,6 +174,7 @@ const ControlPanel = ({
         icon="images/ring_positive.svg"
         iconSize="w-12 h-12"
         iconPosition="mb-[2px]"
+        disabled={blueLimitReached}
       />
     </div>
   );
