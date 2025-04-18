@@ -18,10 +18,24 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="VRC Scorekeeper" />
     <link rel="apple-touch-icon" href="/VRC-Scorekeeper/images/ring.png" />
     <title>VRC Scorekeeper</title>
-    <script type="module" crossorigin src="/VRC-Scorekeeper/assets/index-BhXMCz65.js"></script>
-    <link rel="stylesheet" crossorigin href="/VRC-Scorekeeper/assets/index-B90FaI0s.css">
+    <style>
+      /* Critical CSS to prevent scrolling on iOS immediately */
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        overflow: hidden;
+        touch-action: none;
+      }
+    </style>
+    <script type="module" crossorigin src="/VRC-Scorekeeper/assets/index-CKLusYrI.js"></script>
+    <link rel="stylesheet" crossorigin href="/VRC-Scorekeeper/assets/index-Zlg_dKlY.css">
   <link rel="manifest" href="/VRC-Scorekeeper/manifest.webmanifest"></head>
   <body>
     <div id="root"></div>
